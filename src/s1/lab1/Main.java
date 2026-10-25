@@ -1,10 +1,14 @@
 package s1.lab1;
 
+import java.util.Locale;
+
 public class Main {
 
     public static void main(String[] args) {
 
-
+        // ═══════════════════════════════════════════
+        // الفاتورة الأولى — كتاب × 2
+        // ═══════════════════════════════════════════
         Invoice inv1 = new Invoice(1, "lina@uni.edu");
         inv1.addItem("Book", 100, 2);
 
@@ -12,15 +16,18 @@ public class Main {
 
         inv1.saveToDatabase("DATABASE");
         System.out.println("DATABASE: " + Invoice.DATABASE);
+
         inv1.sendEmail();
         inv1.sendwhatsapp();
 
         System.out.println("Total: " +
-                String.format("%.2f", inv1.calculateTotal()));
+                String.format(Locale.US, "%.2f", inv1.calculateTotal()));
 
         System.out.println();
 
-
+        // ═══════════════════════════════════════════
+        // الفاتورة الثانية — حاسوب × 1
+        // ═══════════════════════════════════════════
         Invoice inv2 = new Invoice(2, "omar@uni.edu");
         inv2.addItem("Laptop", 1200, 1);
 
@@ -33,6 +40,6 @@ public class Main {
         inv2.sendwhatsapp();
 
         System.out.println("Total: " +
-                String.format("%.2f", inv2.calculateTotal()));
+                String.format(Locale.US, "%.2f", inv2.calculateTotal()));
     }
 }

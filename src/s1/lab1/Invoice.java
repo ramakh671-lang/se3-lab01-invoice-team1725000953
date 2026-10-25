@@ -2,14 +2,16 @@ package s1.lab1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Invoice {
 
+    // الحقول الثلاثة المطلوبة
     int number;
     String customerEmail;
     List<InvoiceItem> items;
 
-
+    // القائمتان الثابتتان
     static List<String> DATABASE = new ArrayList<>();
     static List<String> FILES    = new ArrayList<>();
 
@@ -19,7 +21,7 @@ public class Invoice {
         this.items         = new ArrayList<>();
     }
 
-
+    // ── إضافة بند ──────────────────────────────────────────
     public void addItem(String name, double price, int qty) {
         items.add(new InvoiceItem(name, price, qty));
     }
@@ -28,7 +30,7 @@ public class Invoice {
         return items;
     }
 
-
+    // ── الحساب ──────────────────────────────────────────────
     public double calculateTotal() {
         double subtotal = 0;
         for (InvoiceItem item : items) {
@@ -43,7 +45,7 @@ public class Invoice {
         return subtotal;
     }
 
-
+    // ── الطباعة ──────────────────────────────────────────────
     public String printInvoice() {
         StringBuilder sb = new StringBuilder();
         sb.append("INVOICE INV-").append(number).append("\n");
@@ -51,19 +53,19 @@ public class Invoice {
             sb.append(item.name)
                     .append(" x").append(item.qty)
                     .append(" = ")
-                    .append(String.format("%.2f", item.price * item.qty))
+                    .append(String.format(Locale.US, "%.2f", item.price * item.qty))
                     .append("\n");
         }
         sb.append("TOTAL: ")
-                .append(String.format("%.2f", calculateTotal()));
+                .append(String.format(Locale.US, "%.2f", calculateTotal()));
         System.out.println(sb.toString());
         return sb.toString();
     }
 
-
+    // ── الحفظ ────────────────────────────────────────────────
     public void saveToDatabase(String type) {
         String row = number + ";" + customerEmail + ";"
-                + String.format("%.2f", calculateTotal());
+                + String.format(Locale.US, "%.2f", calculateTotal());
         if (type.equals("DATABASE")) {
             DATABASE.add(row);
         } else {
@@ -71,19 +73,21 @@ public class Invoice {
         }
     }
 
+    // ── الإرسال بالبريد ──────────────────────────────────────
     public String sendEmail() {
         String invoiceText = printInvoice(); // تطبع الفاتورة
         String message = "To: " + customerEmail + "\n"
-                + "Subject: Invoice INV-" + number + "\n"
+                + "Subject: Invoice INV-" + number + "\n\n"
                 + invoiceText;
         System.out.println("Sending email...");
         return message; // ترجع الرسالة دون طباعتها
     }
 
+    // ── الإرسال بواتساب ──────────────────────────────────────
     public String sendwhatsapp() {
         String invoiceText = printInvoice(); // تطبع الفاتورة
         String message = "To: sendwhatsapp\n"
-                + "Subject: Invoice INV-" + number + "\n"
+                + "Subject: Invoice INV-" + number + "\n\n"
                 + invoiceText;
         System.out.println("Sending sendwhatsapp...");
         return message; // ترجع الرسالة دون طباعتها

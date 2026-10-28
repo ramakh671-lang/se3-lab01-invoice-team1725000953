@@ -59,7 +59,7 @@ public class Invoice {
     public void saveToDatabase(String type) {
         String row = number + ";" + customerEmail + ";"
                 + String.format(Locale.US, "%.2f", calculateTotal());
-        if (type.equals("DATABASE")) {
+        if ("DATABASE".equals(type)) {
             DATABASE.add(row);
         } else {
             FILES.add(row);

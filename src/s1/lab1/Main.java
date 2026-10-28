@@ -23,7 +23,7 @@ public class Main {
 
         System.out.println();
 
-        
+
         Invoice inv2 = new Invoice(2, "omar@uni.edu");
         inv2.addItem("Laptop", 1200, 1);
 
@@ -37,5 +37,21 @@ public class Main {
 
         System.out.println("Total: " +
                 String.format(Locale.US, "%.2f", inv2.calculateTotal()));
+
+        System.out.println();
+
+        Invoice inv3 = new Invoice(3, "sara@uni.edu");
+        inv3.addItem("Chair", 500, 2);
+
+        inv3.printInvoice();
+
+        inv3.saveToDatabase("DATABASE");
+        System.out.println("DATABASE: " + Invoice.DATABASE);
+
+        inv3.sendEmail();
+        inv3.sendwhatsapp();
+
+        System.out.println("Total: " +
+                String.format(Locale.US, "%.2f", inv3.calculateTotal()));
     }
 }

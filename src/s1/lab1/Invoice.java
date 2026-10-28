@@ -6,12 +6,10 @@ import java.util.Locale;
 
 public class Invoice {
 
-    // الحقول الثلاثة المطلوبة
     int number;
     String customerEmail;
     List<InvoiceItem> items;
 
-    // القائمتان الثابتتان
     static List<String> DATABASE = new ArrayList<>();
     static List<String> FILES    = new ArrayList<>();
 
@@ -21,7 +19,6 @@ public class Invoice {
         this.items         = new ArrayList<>();
     }
 
-    // ── إضافة بند ──────────────────────────────────────────
     public void addItem(String name, double price, int qty) {
         items.add(new InvoiceItem(name, price, qty));
     }
@@ -30,13 +27,11 @@ public class Invoice {
         return items;
     }
 
-    // ── الحساب ──────────────────────────────────────────────
     public double calculateTotal() {
         double subtotal = 0;
         for (InvoiceItem item : items) {
             subtotal += item.price * item.qty;
         }
-        // خصم 5% فقط إذا تجاوز 1000 (أي > 1000 وليس >= 1000)
         if (subtotal > 1000) {
             subtotal = subtotal * 0.95;
         }
@@ -45,7 +40,6 @@ public class Invoice {
         return subtotal;
     }
 
-    // ── الطباعة ──────────────────────────────────────────────
     public String printInvoice() {
         StringBuilder sb = new StringBuilder();
         sb.append("INVOICE INV-").append(number).append("\n");
@@ -62,7 +56,6 @@ public class Invoice {
         return sb.toString();
     }
 
-    // ── الحفظ ────────────────────────────────────────────────
     public void saveToDatabase(String type) {
         String row = number + ";" + customerEmail + ";"
                 + String.format(Locale.US, "%.2f", calculateTotal());
@@ -73,7 +66,6 @@ public class Invoice {
         }
     }
 
-    // ── الإرسال بالبريد ──────────────────────────────────────
     public String sendEmail() {
         String invoiceText = printInvoice(); // تطبع الفاتورة
         String message = "To: " + customerEmail + "\n"
@@ -83,7 +75,6 @@ public class Invoice {
         return message; // ترجع الرسالة دون طباعتها
     }
 
-    // ── الإرسال بواتساب ──────────────────────────────────────
     public String sendwhatsapp() {
         String invoiceText = printInvoice(); // تطبع الفاتورة
         String message = "To: sendwhatsapp\n"

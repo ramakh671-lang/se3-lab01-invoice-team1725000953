@@ -40,18 +40,6 @@ public class Main {
 
         System.out.println();
 
-        Invoice inv3 = new Invoice(3, "sara@uni.edu");
-        inv3.addItem("Chair", 500, 2);
 
-        inv3.printInvoice();
-
-        inv3.saveToDatabase("DATABASE");
-        System.out.println("DATABASE: " + Invoice.DATABASE);
-
-        inv3.sendEmail();
-        inv3.sendwhatsapp();
-
-        System.out.println("Total: " +
-                String.format(Locale.US, "%.2f", inv3.calculateTotal()));
     }
 }

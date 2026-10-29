@@ -1,4 +1,3 @@
-```java
 package s1.lab2;
 
 import java.util.Locale;
@@ -67,4 +66,3 @@ public class Main {
                         calc.calculateTotal(inv2)));
     }
 }
-```

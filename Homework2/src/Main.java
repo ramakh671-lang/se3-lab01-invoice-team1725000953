@@ -1,4 +1,4 @@
-/** Temporary test for Steps 1-2 (will be replaced by the console menu in Step 5). */
+/** Temporary test for Steps 1-3 (will be replaced by the console menu in Step 5). */
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== Scenario 1: Card payment, full flow ===");
@@ -11,18 +11,26 @@ public class Main {
         Order b = new Order(2, 100.0);
         b.setPaymentStrategy(new CashOnDelivery());
         b.pay(); b.ship(); b.deliver();
+        System.out.println("Status: " + b.getStatus());
 
-        System.out.println("\n=== Scenario 3: switching strategy at runtime (same order amount) ===");
-        Order c = new Order(3, 100.0);
+        System.out.println("\n=== Scenario 3: PayPal (via Adapter), full flow ===");
+        Order p = new Order(3, 100.0);
+        p.setPaymentStrategy(new PayPalAdapter());   // used like any other strategy
+        p.pay(); p.ship(); p.deliver();
+        System.out.println("Status: " + p.getStatus());
+
+        System.out.println("\n=== Scenario 4: switching strategy at runtime (same order amount) ===");
+        Order c = new Order(4, 100.0);
         c.setPaymentStrategy(new CardPayment());
-        c.setPaymentStrategy(new CashOnDelivery());   // changed before paying
+        c.setPaymentStrategy(new PayPalAdapter());
+        c.setPaymentStrategy(new CashOnDelivery());
         c.pay();
         System.out.printf("Total paid: %.2f%n", c.getPaidAmount());
 
-        System.out.println("\n=== Scenario 4: forbidden transitions ===");
+        System.out.println("\n=== Scenario 5: forbidden transitions ===");
         a.ship();
         a.cancel();
-        Order d = new Order(4, 50.0);
+        Order d = new Order(5, 50.0);
         d.pay();      // no payment method chosen
         d.ship();     // not paid
     }

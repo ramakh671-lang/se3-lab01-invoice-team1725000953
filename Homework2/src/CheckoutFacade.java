@@ -3,7 +3,7 @@
  * Inventory, Payment (via the order's PaymentStrategy), Shipping and Notification.
  */
 public class CheckoutFacade {
-    private final InventoryService inventory = new InventoryService(2);
+    private final InventoryService inventory = new InventoryService(10);
     private final ShippingService shipping = new ShippingService();
     private final NotificationService notification = new NotificationService();
 

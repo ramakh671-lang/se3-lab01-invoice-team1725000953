@@ -1,35 +1,26 @@
-/** Temporary test for Steps 1-4 (will be replaced by the console menu in Step 5). */
+/** Temporary test for Steps 1-5 (will be replaced by the console menu in Step 6). */
 public class Main {
     public static void main(String[] args) {
+        // Decorators stacked on the original service: Logging -> Caching -> Basic
+        OrderService service = new LoggingDecorator(new CachingDecorator(new BasicOrderService()));
         CheckoutFacade checkout = new CheckoutFacade();
 
-        System.out.println("=== Scenario 1: Checkout with Card ===");
-        Order a = new Order(1, 100.0);
-        a.setPaymentStrategy(new CardPayment());
-        checkout.placeOrder(a);          // ONE call hides all the services
-        a.deliver();
-        System.out.println("Status: " + a.getStatus());
+        System.out.println("=== Decorator: create order ===");
+        Order order = service.createOrder(100.0);
 
-        System.out.println("\n=== Scenario 2: Checkout with PayPal (Adapter) ===");
-        Order b = new Order(2, 100.0);
-        b.setPaymentStrategy(new PayPalAdapter());
-        checkout.placeOrder(b);
-        System.out.println("Status: " + b.getStatus());
+        System.out.println("\n=== Decorator: get order twice (Logging + Caching) ===");
+        service.getOrder(99);              // not found: cache miss + DB lookup
+        service.getOrder(order.getId());   // created order is already cached -> hit
+        service.getOrder(order.getId());   // hit again
 
-        System.out.println("\n=== Scenario 3: Out of stock ===");
-        Order c = new Order(3, 100.0);
-        c.setPaymentStrategy(new CashOnDelivery());
-        checkout.placeOrder(c);
-        System.out.println("Status: " + c.getStatus());
+        System.out.println("\n=== Whole flow with the service ===");
+        Order o = service.getOrder(order.getId());
+        o.setPaymentStrategy(new PayPalAdapter());
+        checkout.placeOrder(o);
+        o.deliver();
+        System.out.println("Status: " + o.getStatus());
 
-        System.out.println("\n=== Scenario 4: Checkout without a payment method ===");
-        CheckoutFacade checkout2 = new CheckoutFacade();
-        Order d = new Order(4, 50.0);
-        checkout2.placeOrder(d);
-        System.out.println("Status: " + d.getStatus());
-
-        System.out.println("\n=== Scenario 5: Forbidden transition ===");
-        a.ship();
-        a.cancel();
+        System.out.println("\n=== Forbidden transition ===");
+        o.ship();
     }
 }

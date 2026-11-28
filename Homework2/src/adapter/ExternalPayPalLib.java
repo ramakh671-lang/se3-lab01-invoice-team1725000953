@@ -1,3 +1,5 @@
+package adapter;
+
 /**
  * Adapter pattern: the ADAPTEE.
  * Simulates a third-party library. Its interface is different from PaymentStrategy

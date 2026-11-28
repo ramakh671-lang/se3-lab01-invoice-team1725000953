@@ -1,3 +1,7 @@
+package facade;
+
+import model.Order;
+
 /** Facade pattern: subsystem class 2. */
 public class ShippingService {
     public void arrangeShipping(Order order) {

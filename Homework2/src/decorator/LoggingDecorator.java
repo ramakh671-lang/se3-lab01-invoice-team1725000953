@@ -1,3 +1,7 @@
+package decorator;
+
+import model.Order;
+
 /** Decorator pattern: ConcreteDecorator 1 - adds Logging without touching the original class. */
 public class LoggingDecorator extends OrderServiceDecorator {
 

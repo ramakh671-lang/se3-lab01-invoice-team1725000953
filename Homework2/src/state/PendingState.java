@@ -1,3 +1,7 @@
+package state;
+
+import model.Order;
+
 public class PendingState implements OrderState {
     public void pay(Order o) {
         if (!o.hasPaymentStrategy()) {   // only checks that a method was chosen, not WHICH one

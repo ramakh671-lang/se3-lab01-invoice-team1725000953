@@ -1,3 +1,7 @@
+package facade;
+
+import model.Order;
+
 /**
  * Facade pattern: a single simple entry point (placeOrder) that hides the coordination of
  * Inventory, Payment (via the order's PaymentStrategy), Shipping and Notification.

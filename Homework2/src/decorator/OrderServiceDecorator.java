@@ -1,3 +1,7 @@
+package decorator;
+
+import model.Order;
+
 /** Decorator pattern: the base Decorator. Implements the same interface and wraps a component. */
 public abstract class OrderServiceDecorator implements OrderService {
     protected final OrderService wrapped;

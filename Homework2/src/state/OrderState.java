@@ -1,3 +1,7 @@
+package state;
+
+import model.Order;
+
 /** State pattern: the State interface. */
 public interface OrderState {
     void pay(Order order);

@@ -1,0 +1,118 @@
+classDiagram
+    direction TB
+
+    namespace State_Pattern {
+        class OrderState {
+            <<interface>>
+            +pay(Order o)
+            +ship(Order o)
+            +deliver(Order o)
+            +cancel(Order o)
+            +getName() String
+        }
+        class PendingState
+        class PaidState
+        class ShippedState
+        class DeliveredState
+        class CancelledState
+    }
+
+    class Order {
+        <<Context of State and Strategy>>
+        -int id
+        -double amount
+        -OrderState state
+        -PaymentStrategy paymentStrategy
+        +pay()
+        +ship()
+        +deliver()
+        +cancel()
+        +setState(OrderState s)
+        +setPaymentStrategy(PaymentStrategy s)
+        +charge() double
+    }
+
+    namespace Strategy_Pattern {
+        class PaymentStrategy {
+            <<interface>>
+            +pay(double amount) double
+            +getName() String
+        }
+        class CardPayment
+        class CashOnDelivery
+    }
+
+    namespace Adapter_Pattern {
+        class ExternalPayPalLib {
+            <<Adaptee - not modified>>
+            +makeTransaction(String currency, double value) double
+        }
+        class PayPalAdapter {
+            <<Adapter>>
+            -ExternalPayPalLib paypal
+            +pay(double amount) double
+        }
+    }
+
+    namespace Facade_Pattern {
+        class CheckoutFacade {
+            <<Facade>>
+            +placeOrder(Order o) boolean
+        }
+        class InventoryService
+        class ShippingService
+        class NotificationService
+    }
+
+    namespace Decorator_Pattern {
+        class OrderService {
+            <<interface Component>>
+            +createOrder(double amount) Order
+            +getOrder(int id) Order
+        }
+        class BasicOrderService {
+            <<ConcreteComponent>>
+        }
+        class OrderServiceDecorator {
+            <<abstract Decorator>>
+            #OrderService wrapped
+        }
+        class LoggingDecorator {
+            <<ConcreteDecorator>>
+        }
+        class CachingDecorator {
+            <<ConcreteDecorator>>
+        }
+    }
+
+    %% ---- State ----
+    PendingState ..|> OrderState
+    PaidState ..|> OrderState
+    ShippedState ..|> OrderState
+    DeliveredState ..|> OrderState
+    CancelledState ..|> OrderState
+    Order --> OrderState : state
+    OrderState ..> Order : changes state of
+
+    %% ---- Strategy ----
+    Order --> PaymentStrategy : paymentStrategy
+    CardPayment ..|> PaymentStrategy
+    CashOnDelivery ..|> PaymentStrategy
+
+    %% ---- Adapter ----
+    PayPalAdapter ..|> PaymentStrategy
+    PayPalAdapter --> ExternalPayPalLib : adapts
+
+    %% ---- Facade ----
+    CheckoutFacade *-- InventoryService
+    CheckoutFacade *-- ShippingService
+    CheckoutFacade *-- NotificationService
+    CheckoutFacade ..> Order : uses
+
+    %% ---- Decorator ----
+    BasicOrderService ..|> OrderService
+    OrderServiceDecorator ..|> OrderService
+    OrderServiceDecorator o-- OrderService : wraps
+    LoggingDecorator --|> OrderServiceDecorator
+    CachingDecorator --|> OrderServiceDecorator
+    OrderService ..> Order : creates

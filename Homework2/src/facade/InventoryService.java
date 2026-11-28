@@ -1,3 +1,7 @@
+package facade;
+
+import model.Order;
+
 /** Facade pattern: subsystem class 1 (in-memory stock). */
 public class InventoryService {
     private int stock;

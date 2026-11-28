@@ -1,3 +1,7 @@
+package adapter;
+
+import strategy.PaymentStrategy;
+
 /**
  * Adapter pattern: the ADAPTER.
  * Implements the interface the system expects (PaymentStrategy, the Target)

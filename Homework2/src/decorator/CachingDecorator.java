@@ -1,3 +1,7 @@
+package decorator;
+
+import model.Order;
+
 import java.util.HashMap;
 import java.util.Map;
 

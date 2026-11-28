@@ -1,3 +1,5 @@
+package strategy;
+
 /** Strategy pattern: concrete strategy 2 (cash on delivery, fixed fee). */
 public class CashOnDelivery implements PaymentStrategy {
     private static final double HANDLING_FEE = 3.0;

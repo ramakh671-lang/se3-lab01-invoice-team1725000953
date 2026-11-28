@@ -1,3 +1,9 @@
+package model;
+
+import state.OrderState;
+import state.PendingState;
+import strategy.PaymentStrategy;
+
 /**
  * State pattern: the Context (holds the current state).
  * Strategy pattern: also holds the current PaymentStrategy and lets it be switched at runtime.

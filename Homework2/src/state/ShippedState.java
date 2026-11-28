@@ -1,3 +1,7 @@
+package state;
+
+import model.Order;
+
 public class ShippedState implements OrderState {
     public void pay(Order o)     { System.out.println("ERROR: order is already paid."); }
     public void ship(Order o)    { System.out.println("ERROR: order is already shipped."); }
